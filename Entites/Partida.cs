@@ -1,92 +1,132 @@
-﻿/*Como a posição inicial de vetor é 0, a partida fica da seguinte maneira:
-    0   1   2 
-    3   4   5
-    6   7   8 
-*/
-
-using System.Linq;
-using System;
+﻿using System;
 
 namespace Jogo_da_Velha.Entites
 {
     class Partida
     {
-        public Peca[] pecas { get; private set; }//Vetor de peças de 1 a 9
-        public bool Fim { get; private set; }//Bool para caso a partida acabe
+        public char[] pecas { get; private set; }//Vetor de peças de 1 a 9
+        public bool Fim { get; set; }//Bool para caso a partida acabe
         public bool TipoDePartida { get; set; }//True : PvP, False : PvIA
-        public char Vencedor { get; private set; }//O Vencedor da partida
-        
-        public Partida() { }
+        public char Vencedor { get; set; }//O Vencedor da partida
         public Partida(bool tipo)
         {
-            //Criar um vetor de pecas com o tamanho 9 (3x3)
+            //Criar as posicoes com N sendo o valor vazio
+            pecas = new char[9];
+            pecas[0] = 'N';
+            pecas[1] = 'N';  //Como a posição inicial do vetor é 0, fica da seguinte maneira:
+            pecas[2] = 'N';  //  0  1  2
+            pecas[3] = 'N';  //  3  4  5 
+            pecas[4] = 'N';  //  7  8  9
+            pecas[5] = 'N';
+            pecas[6] = 'N';
+            pecas[7] = 'N';
+            pecas[8] = 'N';
+
             Fim = false;
             TipoDePartida = tipo;
         } 
-        public void AdicionarPeca(Peca peca)
+        public bool VerificarPosicao(int p1)
         {
-            if (pecas[peca.Posicao-1] != null)//Verifica se a posição já foi ocupada
+            if (pecas[p1] == 'N')//Verifica se a posição já foi ocupada
             {
-                System.Console.WriteLine("Posição já ocupada!");
+                return false;//Se estiver livre retorne falso
             }
-            else 
+            else
             {
-                pecas[peca.Posicao-1] = peca;//Adiciona uma peca na posição dela
+                
+                return true;//Se falhar retorne falso
+                
             }
         }
         public bool VerificarPartida()
         {
             for (int i = 0; i < 2; i++)//Verifica as três linhas horizontais
             {
-                if (pecas[0+3*i].Tipo == pecas[1+3*i].Tipo && pecas[0+3*i].Tipo == pecas[2+3*i].Tipo)
-                /*Verifica da seguinte maneira:
-                Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
+                for (int j = 0; i < 2; i++)
                 {
-                    Fim = true;
-                    Vencedor = pecas[0].Tipo;
-                    return true;//Retorno apenas para cortar o metodo
+                    if (pecas[j + (3 * i)] == pecas[j + (3 * i) + 1] && pecas[j + (3 * i)] == pecas[j + (3 * i) + 2] && pecas[j + (3 * i)] != 'N')
+                    /*Verifica da seguinte maneira:
+                    Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
+                    {
+                        Fim = true;
+                        Vencedor = pecas[j + (3 * i)];
+                        return true;//Retorno apenas para cortar o metodo
+                    }
                 }
             }
             for (int i = 0; i < 2; i++)//Verifica as três linhas verticais
             {
-                if (pecas[0+i].Tipo == pecas[3+i].Tipo && pecas[0+i].Tipo == pecas[6+i].Tipo)
-                /*Verifica da seguinte maneira:
-                Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
+                for (int j = 0; j < 2; j++)
                 {
-                    Fim = true;
-                    Vencedor = pecas[0].Tipo;
-                    return true;//Retorno apenas para cortar o metodo
+                    if (pecas[j + (i * 3)] == pecas[j + (i * 3) + 3] && pecas[j + (i * 3)] == pecas[i + j + 6] && pecas[j + i * 3] != 'N')
+                    /*Verifica da seguinte maneira:
+                    Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
+                    {
+                        Fim = true;
+                        Vencedor = pecas[j + (i * 3)];
+                        return true;//Retorno apenas para cortar o metodo
+                    }
                 }
             }
-            if (pecas[0].Tipo == pecas[5].Tipo && pecas[0].Tipo == pecas[8].Tipo)//Verifica a diagonal da esquerda para direita 
+            if (pecas[0] == pecas[4] && pecas[0] == pecas[8] && pecas[0] != 'N')//Verifica a diagonal da esquerda para direita 
             {
                 Fim = true;
-                Vencedor = pecas[0].Tipo;
+                Vencedor = pecas[0];
                 return true;//Retorno apenas para cortar o metodo
             }
-            if (pecas[3].Tipo == pecas[5].Tipo && pecas[3].Tipo == pecas[6].Tipo)//Verifica a diagonal da direita para esquerda
+            if (pecas[2] == pecas[4] && pecas[2] == pecas[6] && pecas[2] != 'N')//Verifica a diagonal da direita para esquerda
             {
                 Fim = true;
-                Vencedor = pecas[0].Tipo;
+                Vencedor = pecas[2];
                 return true;//Retorno apenas para cortar o metodo
+            }
+            else if (pecas[0] != 'N' && pecas[1] != 'N' && pecas[2] !='N' && pecas[3] !='N' && pecas[4] != 'N' && pecas[5] !='N' && pecas[6] != 'N' && pecas[7] != 'N' && pecas[8] != 'N')
+            //Verifica se todas as posições já foram ocupadas
+            {
+                Fim = true;
+                Vencedor = 'N';//Não houve vencedor
+                return true;
             }
             else
             {
                 return false;//Caso não aconteça nada retorne falso
             }
+
         }
         public void ImprimirPartida()
         {
-            for(int i = 0; i>2; i++)
+            for (int j = 0; j <= 2; j++)
             {
-                if (pecas[i].Tipo != 'X' && pecas[i].Tipo != 'O')
+                for (int i = 0; i <= 2; i++)//Imprimir cada linha
                 {
-                    Console.Write(" ");
+                    if (pecas[i+(j*3)] == 'N')//Se não houver peça imprima um espaço vazio
+                    {
+                        if (i == 2)
+                        {
+                            Console.WriteLine("   ");//Se for o ultimo finalize a linha
+                        }
+                        else
+                        {
+                            Console.Write("   |");
+                        }
+                    }
+                    else//Se houver imprima o char da peça
+                    {
+                        if (i == 2)//Se for o ultimo finalize a linha
+                        {
+                            Console.WriteLine($" {pecas[i+(j*3)]}   ");
+                        }
+                        else
+                        {
+                            Console.Write($" {pecas[i+(j*3)]} |");
+                        }
+                    }
                 }
-                else
+                if (j < 2)//Não faça na ultima linha
                 {
-                    Console.Write(pecas[1].Tipo);
+                   Console.WriteLine("---+---+---");
                 }
+               
             }
         }
     }
