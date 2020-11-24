@@ -40,33 +40,29 @@ namespace Jogo_da_Velha.Entites
         }
         public bool VerificarPartida()
         {
-            for (int i = 0; i < 2; i++)//Verifica as três linhas horizontais
+            for (int i = 0; i < 3; i++)//Verifica as três linhas horizontais
             {
-                for (int j = 0; i < 2; i++)
+                if (pecas[3 * i] == pecas[(3 * i) + 1] && pecas[(3 * i)] == pecas[(3 * i) + 2] && pecas[(3 * i)] != 'N')
+                /*Verifica da seguinte maneira:
+                Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
                 {
-                    if (pecas[j + (3 * i)] == pecas[j + (3 * i) + 1] && pecas[j + (3 * i)] == pecas[j + (3 * i) + 2] && pecas[j + (3 * i)] != 'N')
-                    /*Verifica da seguinte maneira:
-                    Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
-                    {
-                        Fim = true;
-                        Vencedor = pecas[j + (3 * i)];
-                        return true;//Retorno apenas para cortar o metodo
-                    }
+                    Fim = true;
+                    Vencedor = pecas[3 * i];
+                    return true;//Retorno apenas para cortar o metodo
                 }
+
             }
-            for (int i = 0; i < 2; i++)//Verifica as três linhas verticais
+            for (int i = 0; i < 3; i++)//Verifica as três linhas verticais
             {
-                for (int j = 0; j < 2; j++)
+                if (pecas[i] == pecas[i + 3] && pecas[i] == pecas[i + 6] && pecas[i] != 'N')
+                /*Verifica da seguinte maneira:
+                Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
                 {
-                    if (pecas[j + (i * 3)] == pecas[j + (i * 3) + 3] && pecas[j + (i * 3)] == pecas[i + j + 6] && pecas[j + i * 3] != 'N')
-                    /*Verifica da seguinte maneira:
-                    Se a peça nas posições forem do mesmo tipo houve uma combinação e o jogador daquele tipo venceu*/
-                    {
-                        Fim = true;
-                        Vencedor = pecas[j + (i * 3)];
-                        return true;//Retorno apenas para cortar o metodo
-                    }
+                    Fim = true;
+                    Vencedor = pecas[i];
+                    return true;//Retorno apenas para cortar o metodo
                 }
+
             }
             if (pecas[0] == pecas[4] && pecas[0] == pecas[8] && pecas[0] != 'N')//Verifica a diagonal da esquerda para direita 
             {
@@ -80,7 +76,7 @@ namespace Jogo_da_Velha.Entites
                 Vencedor = pecas[2];
                 return true;//Retorno apenas para cortar o metodo
             }
-            else if (pecas[0] != 'N' && pecas[1] != 'N' && pecas[2] !='N' && pecas[3] !='N' && pecas[4] != 'N' && pecas[5] !='N' && pecas[6] != 'N' && pecas[7] != 'N' && pecas[8] != 'N')
+            else if (pecas[0] != 'N' && pecas[1] != 'N' && pecas[2] != 'N' && pecas[3] != 'N' && pecas[4] != 'N' && pecas[5] != 'N' && pecas[6] != 'N' && pecas[7] != 'N' && pecas[8] != 'N')
             //Verifica se todas as posições já foram ocupadas
             {
                 Fim = true;
@@ -91,8 +87,6 @@ namespace Jogo_da_Velha.Entites
             {
                 return false;//Caso não aconteça nada retorne falso
             }
-
-        }
         public void ImprimirPartida()
         {
             for (int j = 0; j <= 2; j++)
