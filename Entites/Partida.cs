@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Jogo_da_Velha.Entites
 {
@@ -87,41 +87,43 @@ namespace Jogo_da_Velha.Entites
             {
                 return false;//Caso não aconteça nada retorne falso
             }
-            public void ImprimirPartida()
+           
+        }
+        public void ImprimirPartida()
+        {
+            for (int j = 0; j <= 2; j++)
             {
-                for (int j = 0; j <= 2; j++)
+                for (int i = 0; i <= 2; i++)//Imprimir cada linha
                 {
-                    for (int i = 0; i <= 2; i++)//Imprimir cada linha
+                    if (pecas[i + (j * 3)] == 'N')//Se não houver peça imprima um espaço vazio
                     {
-                        if (pecas[i + (j * 3)] == 'N')//Se não houver peça imprima um espaço vazio
+                        if (i == 2)
                         {
-                            if (i == 2)
-                            {
-                                Console.WriteLine("   ");//Se for o ultimo finalize a linha
-                            }
-                            else
-                            {
-                                Console.Write("   |");
-                            }
+                            Console.WriteLine("   ");//Se for o ultimo finalize a linha
                         }
-                        else//Se houver imprima o char da peça
+                        else
                         {
-                            if (i == 2)//Se for o ultimo finalize a linha
-                            {
-                                Console.WriteLine($" {pecas[i + (j * 3)]}   ");
-                            }
-                            else
-                            {
-                                Console.Write($" {pecas[i + (j * 3)]} |");
-                            }
+                            Console.Write("   |");
                         }
                     }
-                    if (j < 2)//Não faça na ultima linha
+                    else//Se houver imprima o char da peça
                     {
-                        Console.WriteLine("---+---+---");
+                        if (i == 2)//Se for o ultimo finalize a linha
+                        {
+                            Console.WriteLine($" {pecas[i + (j * 3)]}   ");
+                        }
+                        else
+                        {
+                            Console.Write($" {pecas[i + (j * 3)]} |");
+                        }
                     }
-
                 }
+                if (j < 2)//Não faça na ultima linha
+                {
+                    Console.WriteLine("---+---+---");
+                }
+
             }
         }
     }
+}
