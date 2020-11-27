@@ -46,7 +46,6 @@ namespace Jogo_da_Velha
 
                     while (continuacao == 's')
                     {
-
                         jogadorDaVez = 'X';//Primeiro a jogar é o X
                         Partida partida = new Partida(tipo);//Inicia nova partida
                         InteligenciaArtificial jogadorIA = new InteligenciaArtificial(jogador2);//Cria um jogador artificial opcional 
