@@ -10,11 +10,11 @@ namespace System
          1 2 3    7 8 9  
          Teclado  Aceito
         */
-        public static int Converter(this int n)
+        public static int Converter(this int n)//um metodo de extensão dos objetos int
         {
             if (n != 0)
             {
-                if (n == 4 || n == 5 || n == 6)//Como os 4,5,6 são comuns, não é necessario os mudar
+                if (n == 4 || n == 5 || n == 6)//Como as posições 4,5 e 6 são iguais, não é necessario os mudar
                 {
                     return n;
                 }

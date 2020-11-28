@@ -6,10 +6,4 @@
     <RootNamespace>Jogo_da_Velha</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="NovaPasta\**" />
-    <EmbeddedResource Remove="NovaPasta\**" />
-    <None Remove="NovaPasta\**" />
-  </ItemGroup>
-
 </Project>
